@@ -3,11 +3,19 @@ name: test-pr-buildx
 on:
   pull_request:
     branches: master
-    
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   buildx:
     runs-on: ubuntu-latest
     steps:
+      -
+        name: FastCI
+        uses: jfrog-fastci/fastci@v0
       -
         name: Checkout
         uses: actions/checkout@v6
@@ -30,6 +38,3 @@ jobs:
             --platform linux/amd64,linux/arm64 \
             --output "type=image,push=false" \
             --file ./Dockerfile .
-
-
-            
