@@ -1,9 +1,10 @@
 FROM debian:stable-slim as fetcher
 COPY build/fetch_binaries.sh /tmp/fetch_binaries.sh
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   curl \
-  wget
+  wget \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN /tmp/fetch_binaries.sh
 
